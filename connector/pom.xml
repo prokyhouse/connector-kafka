@@ -22,6 +22,28 @@
     <sonar.host.url>https://sonarcloud.io</sonar.host.url>
   </properties>
 
+  <repositories>
+    <repository>
+      <id>evolveum-nexus-releases</id>
+      <name>Internal Releases</name>
+      <url>https://nexus.evolveum.com/nexus/content/groups/public/</url>
+    </repository>
+    <repository>
+      <id>evolveum-nexus-snapshots</id>
+      <name>Internal Releases</name>
+      <url>https://nexus.evolveum.com/nexus/content/repositories/snapshots/</url>
+    </repository>
+    <repository>
+      <id>central</id>
+      <name>Maven Central</name>
+      <layout>default</layout>
+      <url>https://repo1.maven.org/maven2</url>
+      <snapshots>
+        <enabled>false</enabled>
+      </snapshots>
+    </repository>
+  </repositories>
+
   <dependencies>
     <dependency>
       <groupId>junit</groupId>

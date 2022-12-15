@@ -161,3 +161,11 @@ buildNumber.properties
 
 # End of https://www.toptal.com/developers/gitignore/api/java,intellij,maven
 .DS_Store
+.idea/compiler.xml
+.idea/connector-kafka.iml
+.idea/encodings.xml
+.idea/jarRepositories.xml
+.idea/misc.xml
+.idea/modules.xml
+.idea/vcs.xml
+connector/connector.iml
