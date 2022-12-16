@@ -46,4 +46,3 @@ Compuer Science and System design*
 E-mail: k.lyashchenko@g.nsu.ru
 
 Telegram: [@Ksuuuuuuuuuusha](https://t.me/Ksuuuuuuuuuusha)
-
