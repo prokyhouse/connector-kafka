@@ -30,6 +30,7 @@ E-mail: m.lobova@g.nsu.ru
 Telegram: [@MargaritaLobova](https://t.me/MargaritaLobova)
 
 <br><img src="https://sun4.userapi.com/sun4-16/s/v1/ig2/zrrEwwWolKkL3wqfahbjXYGuklp1aqI0TlbsjYTwHViTKHFCoaBDsnXfcgUWDFYu2FC8erBQMBU_jkgzGQv27o5T.jpg?size=200x200&quality=95&crop=272,108,1088,1088&ava=1" alt="Артём Пленкин" align="left" width="150"/>
+
 **Артём Плёнкин**  
 *Студент ФИТ НГУ 2023 | 
 Compuer Science and System design*  
@@ -46,3 +47,19 @@ Compuer Science and System design*
 E-mail: k.lyashchenko@g.nsu.ru
 
 Telegram: [@Ksuuuuuuuuuusha](https://t.me/Ksuuuuuuuuuusha)
+
+
+
+## Сборка проекта
+1. собираем проект - mvn clean package
+2. копируем connector-kafka-1.0-SNAPSHOT.jar из папки target в папку midpoint/icf-connectors
+3. открываем терминал и переходим в корень проекта, где лежит docker-compose.yml.
+4. поднимаем образы: docker-compose -f docker-compose.yml up -d
+
+Ждем, пока поднимется мидпоинт
+Дальше в нем переходим во вкладку resources и нажимаем import new resource
+Нажимаем choose file и выбираем kafka-connector-resource.xml, который лежит в папке midpoint/pio/post-initial-objects
+И импортируем.
+
+
+Чтобы остановить контейнеры пишем в терминале: docker-compose -f docker-compose.yml down -v
