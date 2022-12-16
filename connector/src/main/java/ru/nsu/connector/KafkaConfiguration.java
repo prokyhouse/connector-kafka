@@ -14,22 +14,22 @@ public class KafkaConfiguration extends AbstractConfiguration implements Statefu
     protected ConnectorUseCase connectorUseCase;
 
     private String useOfConnector;
-    private String uniqueAttribute;
-    private String nameAttribute;
+    private String uniqueAttribute; // needed
+    private String nameAttribute; // needed
     private String passwordAttribute;
-    private String bootstrapServers;
+    private String bootstrapServers; //needed
     private String nameOfSchema;
 
-    private String consumerNameOfTopic;
-    private Integer consumerVersionOfSchema;
-    private String consumerGroupId;
-    private String consumerPartitionOfTopic;
-    private Integer consumerDurationIfFail;
-    private Integer consumerMaxRecords;
-    private String pathToMorePropertiesForConsumer;
+//    private String consumerNameOfTopic;
+//    private Integer consumerVersionOfSchema;
+//    private String consumerGroupId;
+//    private String consumerPartitionOfTopic;
+//    private Integer consumerDurationIfFail;
+//    private Integer consumerMaxRecords;
+//    private String pathToMorePropertiesForConsumer;
 
-    private String producerPathToFileContainingSchema;
-    private String producerNameOfTopic;
+    private String producerPathToFileContainingSchema; // needed
+    private String producerNameOfTopic; // needed
     private String pathToMorePropertiesForProducer;
 
 
@@ -46,8 +46,8 @@ public class KafkaConfiguration extends AbstractConfiguration implements Statefu
         return (ConnectorUseCase.PRODUCER == connectorUseCase);
     }
 
-    @ConfigurationProperty(order = 38, displayMessageKey = "useOfConnector.display",
-            helpMessageKey = "useOfConnector.help", required = true, confidential = false)
+//    @ConfigurationProperty(order = 38, displayMessageKey = "useOfConnector.display",
+//            helpMessageKey = "useOfConnector.help", required = true, confidential = false)
     public String getUseOfConnector() {
         return useOfConnector;
     }
@@ -57,7 +57,7 @@ public class KafkaConfiguration extends AbstractConfiguration implements Statefu
     }
 
     @ConfigurationProperty(order = 39, displayMessageKey = "uniqueAttribute.display",
-            helpMessageKey = "uniqueAttribute.help", required = true, confidential = false)
+            helpMessageKey = "uniqueAttribute.help", required = true)
     public String getUniqueAttribute() {
         return uniqueAttribute;
     }
@@ -67,7 +67,7 @@ public class KafkaConfiguration extends AbstractConfiguration implements Statefu
     }
 
     @ConfigurationProperty(order = 40, displayMessageKey = "bootstrapServers.display",
-            helpMessageKey = "bootstrapServers.help", required = true, confidential = false)
+            helpMessageKey = "bootstrapServers.help", required = true)
     public String getBootstrapServers() {
         return bootstrapServers;
     }
@@ -76,8 +76,8 @@ public class KafkaConfiguration extends AbstractConfiguration implements Statefu
         this.bootstrapServers = bootstrapServers;
     }
 
-    @ConfigurationProperty(order = 41, displayMessageKey = "nameOfSchema.display",
-            helpMessageKey = "nameOfSchema.help", required = true, confidential = false)
+    //    @ConfigurationProperty(order = 41, displayMessageKey = "nameOfSchema.display",
+//            helpMessageKey = "nameOfSchema.help", required = true, confidential = false)
     public String getNameOfSchema() {
         return nameOfSchema;
     }
@@ -87,8 +87,8 @@ public class KafkaConfiguration extends AbstractConfiguration implements Statefu
     }
 
 
-    @ConfigurationProperty(order = 43, displayMessageKey = "passwordAttribute.display",
-            helpMessageKey = "passwordAttribute.help", required = false, confidential = false)
+//    @ConfigurationProperty(order = 43, displayMessageKey = "passwordAttribute.display",
+//            helpMessageKey = "passwordAttribute.help", required = false, confidential = false)
     public String getPasswordAttribute() {
         return passwordAttribute;
     }
@@ -98,7 +98,7 @@ public class KafkaConfiguration extends AbstractConfiguration implements Statefu
     }
 
     @ConfigurationProperty(order = 43, displayMessageKey = "nameAttribute.display",
-            helpMessageKey = "nameAttribute.help", required = false, confidential = false)
+            helpMessageKey = "nameAttribute.help", required = true)
     public String getNameAttribute() {
         return nameAttribute;
     }
@@ -110,80 +110,80 @@ public class KafkaConfiguration extends AbstractConfiguration implements Statefu
 
     // consumer properties
 
-    @ConfigurationProperty(order = 79, displayMessageKey = "consumerNameOfTopic.display",
-            helpMessageKey = "consumerNameOfTopic.help", required = false, confidential = false)
-    public String getConsumerNameOfTopic() {
-        return consumerNameOfTopic;
-    }
-
-    public void setConsumerNameOfTopic(String consumerNameOfTopic) {
-        this.consumerNameOfTopic = consumerNameOfTopic;
-    }
-
-    @ConfigurationProperty(order = 80, displayMessageKey = "consumerVersionOfSchema.display",
-            helpMessageKey = "consumerVersionOfSchema.help", required = false, confidential = false)
-    public Integer getConsumerVersionOfSchema() {
-        return consumerVersionOfSchema;
-    }
-
-    public void setConsumerVersionOfSchema(Integer consumerVersionOfSchema) {
-        this.consumerVersionOfSchema = consumerVersionOfSchema;
-    }
-
-    @ConfigurationProperty(order = 81, displayMessageKey = "consumerGroupId.display",
-            helpMessageKey = "consumerGroupId.help", required = false, confidential = false)
-    public String getConsumerGroupId() {
-        return consumerGroupId;
-    }
-
-    public void setConsumerGroupId(String consumerGroupId) {
-        this.consumerGroupId = consumerGroupId;
-    }
-
-    @ConfigurationProperty(order = 83, displayMessageKey = "consumerPartitionOfTopic.display",
-            helpMessageKey = "consumerPartitionOfTopic.help", required = false, confidential = false)
-    public String getConsumerPartitionOfTopic() {
-        return consumerPartitionOfTopic;
-    }
-
-    public void setConsumerPartitionOfTopic(String partitionOfTopic) {
-        this.consumerPartitionOfTopic = partitionOfTopic;
-    }
-
-    @ConfigurationProperty(order = 87, displayMessageKey = "consumerDurationIfFail.display",
-            helpMessageKey = "consumerDurationIfFail.help", required = false, confidential = false)
-    public Integer getConsumerDurationIfFail() {
-        return consumerDurationIfFail;
-    }
-
-    public void setConsumerDurationIfFail(Integer consumerDurationIfFail) {
-        this.consumerDurationIfFail = consumerDurationIfFail;
-    }
-
-    @ConfigurationProperty(order = 88, displayMessageKey = "consumerMaxRecords.display",
-            helpMessageKey = "consumerMaxRecords.help", required = false, confidential = false)
-    public Integer getConsumerMaxRecords() {
-        return consumerMaxRecords;
-    }
-
-    public void setConsumerMaxRecords(Integer consumerMaxRecords) {
-        this.consumerMaxRecords = consumerMaxRecords;
-    }
-
-    @ConfigurationProperty(order = 89, displayMessageKey = "pathToMorePropertiesForConsumer.display",
-            helpMessageKey = "pathToMorePropertiesForConsumer.help", required = false, confidential = false)
-    public String getPathToMorePropertiesForConsumer() {
-        return pathToMorePropertiesForConsumer;
-    }
-
-    public void setPathToMorePropertiesForConsumer(String pathToMorePropertiesForConsumer) {
-        this.pathToMorePropertiesForConsumer = pathToMorePropertiesForConsumer;
-    }
+//    @ConfigurationProperty(order = 79, displayMessageKey = "consumerNameOfTopic.display",
+//            helpMessageKey = "consumerNameOfTopic.help", required = false, confidential = false)
+//    public String getConsumerNameOfTopic() {
+//        return consumerNameOfTopic;
+//    }
+//
+//    public void setConsumerNameOfTopic(String consumerNameOfTopic) {
+//        this.consumerNameOfTopic = consumerNameOfTopic;
+//    }
+//
+//    @ConfigurationProperty(order = 80, displayMessageKey = "consumerVersionOfSchema.display",
+//            helpMessageKey = "consumerVersionOfSchema.help", required = false, confidential = false)
+//    public Integer getConsumerVersionOfSchema() {
+//        return consumerVersionOfSchema;
+//    }
+//
+//    public void setConsumerVersionOfSchema(Integer consumerVersionOfSchema) {
+//        this.consumerVersionOfSchema = consumerVersionOfSchema;
+//    }
+//
+//    @ConfigurationProperty(order = 81, displayMessageKey = "consumerGroupId.display",
+//            helpMessageKey = "consumerGroupId.help", required = false, confidential = false)
+//    public String getConsumerGroupId() {
+//        return consumerGroupId;
+//    }
+//
+//    public void setConsumerGroupId(String consumerGroupId) {
+//        this.consumerGroupId = consumerGroupId;
+//    }
+//
+//    @ConfigurationProperty(order = 83, displayMessageKey = "consumerPartitionOfTopic.display",
+//            helpMessageKey = "consumerPartitionOfTopic.help", required = false, confidential = false)
+//    public String getConsumerPartitionOfTopic() {
+//        return consumerPartitionOfTopic;
+//    }
+//
+//    public void setConsumerPartitionOfTopic(String partitionOfTopic) {
+//        this.consumerPartitionOfTopic = partitionOfTopic;
+//    }
+//
+//    @ConfigurationProperty(order = 87, displayMessageKey = "consumerDurationIfFail.display",
+//            helpMessageKey = "consumerDurationIfFail.help", required = false, confidential = false)
+//    public Integer getConsumerDurationIfFail() {
+//        return consumerDurationIfFail;
+//    }
+//
+//    public void setConsumerDurationIfFail(Integer consumerDurationIfFail) {
+//        this.consumerDurationIfFail = consumerDurationIfFail;
+//    }
+//
+//    @ConfigurationProperty(order = 88, displayMessageKey = "consumerMaxRecords.display",
+//            helpMessageKey = "consumerMaxRecords.help", required = false, confidential = false)
+//    public Integer getConsumerMaxRecords() {
+//        return consumerMaxRecords;
+//    }
+//
+//    public void setConsumerMaxRecords(Integer consumerMaxRecords) {
+//        this.consumerMaxRecords = consumerMaxRecords;
+//    }
+//
+//    @ConfigurationProperty(order = 89, displayMessageKey = "pathToMorePropertiesForConsumer.display",
+//            helpMessageKey = "pathToMorePropertiesForConsumer.help", required = false, confidential = false)
+//    public String getPathToMorePropertiesForConsumer() {
+//        return pathToMorePropertiesForConsumer;
+//    }
+//
+//    public void setPathToMorePropertiesForConsumer(String pathToMorePropertiesForConsumer) {
+//        this.pathToMorePropertiesForConsumer = pathToMorePropertiesForConsumer;
+//    }
 
     // producer properties
 
     @ConfigurationProperty(order = 99, displayMessageKey = "producerNameOfTopic.display",
-            helpMessageKey = "producerNameOfTopic.help", required = false, confidential = false)
+            helpMessageKey = "producerNameOfTopic.help", required = true)
     public String getProducerNameOfTopic() {
         return producerNameOfTopic;
     }
@@ -193,7 +193,7 @@ public class KafkaConfiguration extends AbstractConfiguration implements Statefu
     }
 
     @ConfigurationProperty(order = 100, displayMessageKey = "producerPathToFileContainingSchema.display",
-            helpMessageKey = "producerPathToFileContainingSchema.help", required = false, confidential = false)
+            helpMessageKey = "producerPathToFileContainingSchema.help", required = true)
     public String getProducerPathToFileContainingSchema() {
         return producerPathToFileContainingSchema;
     }
@@ -202,8 +202,8 @@ public class KafkaConfiguration extends AbstractConfiguration implements Statefu
         this.producerPathToFileContainingSchema = producerPathToFileContainingSchema;
     }
 
-    @ConfigurationProperty(order = 106, displayMessageKey = "pathToMorePropertiesForProducer.display",
-            helpMessageKey = "pathToMorePropertiesForProducer.help", required = false, confidential = false)
+//    @ConfigurationProperty(order = 106, displayMessageKey = "pathToMorePropertiesForProducer.display",
+//            helpMessageKey = "pathToMorePropertiesForProducer.help", required = false, confidential = false)
     public String getPathToMorePropertiesForProducer() {
         return pathToMorePropertiesForProducer;
     }
@@ -215,35 +215,35 @@ public class KafkaConfiguration extends AbstractConfiguration implements Statefu
     @Override
     public void validate() {
         LOGGER.info("Processing trough configuration validation procedure.");
-        
+
         if (StringUtil.isBlank(uniqueAttribute)) {
             throw new ConfigurationException("Unique attribute cannot be empty.");
         }
 
-        if (StringUtil.isBlank(useOfConnector)) {
-            throw new ConfigurationException("Use of connector attribute cannot be empty.");
-        }
+//        if (StringUtil.isBlank(useOfConnector)) {
+//            throw new ConfigurationException("Use of connector attribute cannot be empty.");
+//        }
 
         if (bootstrapServers == null || bootstrapServers.isEmpty()) {
             throw new ConfigurationException("Consumer bootstrap server cannot be empty.");
         }
 
-        if (StringUtil.isBlank(nameOfSchema)) {
-            throw new ConfigurationException("Consumer name of schema cannot be empty.");
-        }
+//        if (StringUtil.isBlank(nameOfSchema)) {
+//            throw new ConfigurationException("Consumer name of schema cannot be empty.");
+//        }
 
-        if (isConsumer()) {
-            if (StringUtil.isBlank(consumerNameOfTopic)) {
-                throw new ConfigurationException("Consumer name of topic for consumer cannot be empty.");
-            }
-
-            if (consumerVersionOfSchema == null) {
-                throw new ConfigurationException("Consumer version of schema cannot be empty.");
-            }
-            if (StringUtil.isBlank(consumerGroupId)) {
-                throw new ConfigurationException("Consumer grouper id for consumer cannot be empty.");
-            }
-        }
+//        if (isConsumer()) {
+//            if (StringUtil.isBlank(consumerNameOfTopic)) {
+//                throw new ConfigurationException("Consumer name of topic for consumer cannot be empty.");
+//            }
+//
+//            if (consumerVersionOfSchema == null) {
+//                throw new ConfigurationException("Consumer version of schema cannot be empty.");
+//            }
+//            if (StringUtil.isBlank(consumerGroupId)) {
+//                throw new ConfigurationException("Consumer grouper id for consumer cannot be empty.");
+//            }
+//        }
 
         if (isProducer()) {
 
@@ -271,13 +271,13 @@ public class KafkaConfiguration extends AbstractConfiguration implements Statefu
         this.bootstrapServers = null;
         this.nameOfSchema = null;
 
-        this.consumerNameOfTopic = null;
-        this.consumerVersionOfSchema = null;
-        this.consumerPartitionOfTopic = null;
-        this.consumerGroupId = null;
-        this.consumerDurationIfFail = null;
-        this.consumerMaxRecords = null;
-        this.pathToMorePropertiesForConsumer = null;
+//        this.consumerNameOfTopic = null;
+//        this.consumerVersionOfSchema = null;
+//        this.consumerPartitionOfTopic = null;
+//        this.consumerGroupId = null;
+//        this.consumerDurationIfFail = null;
+//        this.consumerMaxRecords = null;
+//        this.pathToMorePropertiesForConsumer = null;
 
         this.producerNameOfTopic = null;
         this.producerPathToFileContainingSchema = null;

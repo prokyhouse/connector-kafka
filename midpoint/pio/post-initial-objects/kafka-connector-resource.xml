@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<resource xmlns="http://midpoint.evolveum.com/xml/ns/public/common/common-3" xmlns:c="http://midpoint.evolveum.com/xml/ns/public/common/common-3" xmlns:icfs="http://midpoint.evolveum.com/xml/ns/public/connector/icf-1/resource-schema-3" xmlns:org="http://midpoint.evolveum.com/xml/ns/public/common/org-3" xmlns:q="http://prism.evolveum.com/xml/ns/public/query-3" xmlns:ri="http://midpoint.evolveum.com/xml/ns/public/resource/instance-3" xmlns:t="http://prism.evolveum.com/xml/ns/public/types-3" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          oid="7331ce47-d667-4fa3-81d5-c6974c37d29c" version="8">
+    <name>KafkaConnectorResource</name>
+    <metadata>
+        <modifyTimestamp>2022-11-04T08:34:09.178Z</modifyTimestamp>
+        <modifierRef oid="00000000-0000-0000-0000-000000000002" relation="org:default" type="c:UserType">
+            <!-- administrator -->
+        </modifierRef>
+        <modifyChannel>http://midpoint.evolveum.com/xml/ns/public/common/channels-3#user</modifyChannel>
+    </metadata>
+    <iteration>0</iteration>
+    <iterationToken/>
+
+    <connectorRef type="ConnectorType">
+        <filter>
+            <q:equal>
+                <q:path>c:connectorType</q:path>
+                <q:value>ru.nsu.connector.KafkaConnector</q:value>
+            </q:equal>
+        </filter>
+    </connectorRef>
+
+    <connectorConfiguration xmlns:icfc="http://midpoint.evolveum.com/xml/ns/public/connector/icf-1/connector-schema-3">
+        <icfc:configurationProperties xmlns:gen66="http://midpoint.evolveum.com/xml/ns/public/connector/icf-1/bundle/ru.nsu.connector.connector-kafka/ru.nsu.connector.KafkaConnector">
+            <gen66:uniqueAttribute>123456</gen66:uniqueAttribute>
+            <gen66:nameAttribute>123456</gen66:nameAttribute>
+            <gen66:bootstrapServers>localhost:9092</gen66:bootstrapServers>
+            <gen66:producerPathToFileContainingSchema>path</gen66:producerPathToFileContainingSchema>
+            <gen66:producerNameOfTopic>topic1</gen66:producerNameOfTopic>
+        </icfc:configurationProperties>
+    </connectorConfiguration>
+</resource>

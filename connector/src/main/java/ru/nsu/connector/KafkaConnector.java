@@ -5,16 +5,11 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.*;
 
-import com.hortonworks.registries.schemaregistry.serdes.avro.AbstractAvroSnapshotDeserializer;
-import org.apache.kafka.clients.CommonClientConfigs;
-import org.apache.kafka.clients.consumer.ConsumerConfig;
-import org.apache.kafka.clients.consumer.KafkaConsumer;
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.ProducerConfig;
-import org.apache.kafka.common.config.SslConfigs;
-import org.apache.kafka.common.record.Record;
 import org.apache.kafka.common.serialization.StringSerializer;
 import org.identityconnectors.common.logging.Log;
+import org.identityconnectors.framework.common.exceptions.InvalidAttributeValueException;
 import org.identityconnectors.framework.common.objects.*;
 import org.identityconnectors.framework.spi.Configuration;
 import org.identityconnectors.framework.spi.Connector;
@@ -28,10 +23,12 @@ import org.identityconnectors.framework.spi.operations.*;
  */
 
 @ConnectorClass(displayNameKey = "connector.kafka.display", configurationClass = KafkaConfiguration.class)
-public class KafkaConnector implements TestOp, SchemaOp, Connector, SyncOp, CreateOp, UpdateDeltaOp, DeleteOp {
+public class KafkaConnector implements TestOp, SchemaOp, Connector, SyncOp, CreateOp, DeleteOp {
+
+    private static final Log LOGGER = Log.getLog(KafkaConnector.class);
 
     protected KafkaConfiguration configuration;
-    private KafkaProducer<String, Record> producer;
+    private KafkaProducer<String, String> producer;
     public static void main( String[] args ) { }
 
     @Override
@@ -41,11 +38,11 @@ public class KafkaConnector implements TestOp, SchemaOp, Connector, SyncOp, Crea
 
     @Override
     public void init(Configuration configuration) {
-        if (this.configuration.isConsumer()) {
-            System.out.println("[STATE] Connector is CONSUMER");
-        } else if (this.configuration.isProducer()) {
-            System.out.println("[STATE] Connector is PRODUCER");
-        }
+//        if (this.configuration.isConsumer()) {
+//            System.out.println("[STATE] Connector is CONSUMER");
+//        } else if (this.configuration.isProducer()) {
+//            System.out.println("[STATE] Connector is PRODUCER");
+//        }
 
         KafkaConfiguration kafkaConfig = (KafkaConfiguration) configuration;
         this.configuration = kafkaConfig;
@@ -56,15 +53,15 @@ public class KafkaConnector implements TestOp, SchemaOp, Connector, SyncOp, Crea
         }
     }
 
-    private KafkaProducer<String, Record> initProducer() {
+    private KafkaProducer<String, String> initProducer() {
         Properties properties = new Properties();
-        String pathToMorePropertiesForProducer = configuration.getPathToMorePropertiesForProducer();
-
-        if(pathToMorePropertiesForProducer != null) {
-            try (InputStream input = new FileInputStream(pathToMorePropertiesForProducer)) {
-                properties.load(input);
-            } catch (IOException ignored) { }
-        }
+//        String pathToMorePropertiesForProducer = configuration.getPathToMorePropertiesForProducer();
+//
+//        if(pathToMorePropertiesForProducer != null) {
+//            try (InputStream input = new FileInputStream(pathToMorePropertiesForProducer)) {
+//                properties.load(input);
+//            } catch (IOException ignored) { }
+//        }
 
         addCommonPropertiesForConsumerAndProducer(configuration, properties);
 
@@ -76,8 +73,9 @@ public class KafkaConnector implements TestOp, SchemaOp, Connector, SyncOp, Crea
         if(properties.contains(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG)) {
             properties.remove(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG);
         }
+        properties.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
 
-        return new KafkaProducer(properties);
+        return new KafkaProducer<>(properties);
     }
 
     private static void addCommonPropertiesForConsumerAndProducer(KafkaConfiguration configuration, Properties properties) {
@@ -98,27 +96,73 @@ public class KafkaConnector implements TestOp, SchemaOp, Connector, SyncOp, Crea
 
     @Override
     public void dispose() {
-
+        LOGGER.info("Configuration cleanup");
+        configuration = null;
     }
 
     @Override
     public Uid create(ObjectClass objectClass, Set<Attribute> set, OperationOptions operationOptions) {
-        return null;
+        if (!configuration.isProducer()) {
+            throw new UnsupportedOperationException("This operation is unsupported, if you want use this connector as " +
+                    "kafka producer please set 'PRODUCER' for configuration property useOfConnector.");
+        }
+
+        if (objectClass == null) {
+            LOGGER.error("Attribute of type ObjectClass not provided.");
+            throw new InvalidAttributeValueException("Attribute of type ObjectClass not provided.");
+        }
+
+        if (set == null) {
+            LOGGER.error("Attribute of type Set<Attribute> not provided.");
+            throw new InvalidAttributeValueException("Attribute of type Set<Attribute> not provided.");
+        }
+
+        if (operationOptions == null) {
+            LOGGER.error("Parameter of type OperationOptions not provided.");
+            throw new InvalidAttributeValueException("Parameter of type OperationOptions not provided.");
+        }
+
+        LOGGER.info("create on {0}, attributes: {1}, options: {2}", objectClass, set, operationOptions);
+
+        ProducerOperations crateOrUpdateOp = new ProducerOperations(configuration, producer);
+
+        Uid uid = null;
+        try {
+            uid = crateOrUpdateOp.create(set);
+        } catch (IOException e) {
+            LOGGER.error(e, "Couldn't open file " + configuration.getProducerPathToFileContainingSchema());
+        }
+        return uid;
     }
 
     @Override
     public void delete(ObjectClass objectClass, Uid uid, OperationOptions operationOptions) {
-
+        LOGGER.info("Delete is not needed", objectClass, uid.getValue(), operationOptions);
     }
 
     @Override
     public Schema schema() {
-        return null;
+        ObjectClassInfoBuilder objectClassBuilder = new ObjectClassInfoBuilder();
+        objectClassBuilder.setType("myAccount");
+        objectClassBuilder.addAttributeInfo(
+                AttributeInfoBuilder.build("fullName", String.class));
+        objectClassBuilder.addAttributeInfo(
+                AttributeInfoBuilder.build("homeDir", String.class));
+
+        SchemaBuilder schemaBuilder = new SchemaBuilder(KafkaConnector.class);
+        schemaBuilder.defineObjectClass(objectClassBuilder.build());
+        return schemaBuilder.build();
     }
 
     @Override
     public void sync(ObjectClass objectClass, SyncToken syncToken, SyncResultsHandler syncResultsHandler, OperationOptions operationOptions) {
 
+        LOGGER.info("sync on {0}, token: {1}, options: {2}", objectClass, syncToken, operationOptions);
+
+        if (!configuration.isConsumer()) {
+            throw new UnsupportedOperationException("This operation is unsupported, if you want use this connector as " +
+                    "kafka consumer please set 'CONSUMER' or 'CONSUMER_AND_PRODUCER' for configuration property useOfConnector.");
+        }
     }
 
     @Override
@@ -128,11 +172,15 @@ public class KafkaConnector implements TestOp, SchemaOp, Connector, SyncOp, Crea
 
     @Override
     public void test() {
-
+        LOGGER.info("test");
+        if (this.configuration.isProducer()){
+            this.producer.partitionsFor(configuration.getProducerNameOfTopic());
+        }
     }
 
-    @Override
-    public Set<AttributeDelta> updateDelta(ObjectClass objectClass, Uid uid, Set<AttributeDelta> set, OperationOptions operationOptions) {
-        return null;
-    }
+//    @Override
+//    public Set<AttributeDelta> updateDelta(ObjectClass objectClass, Uid uid, Set<AttributeDelta> set, OperationOptions operationOptions) {
+//        LOGGER.info("Update is not needed", objectClass, uid.getValue(), operationOptions);
+//        return null;
+//    }
 }

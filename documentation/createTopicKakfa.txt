@@ -1,0 +1,8 @@
+docker exec -it {имя контейнера с кафкой} /bin/bash
+kafka-topics --version
+cd ../..
+cd bin
+./kafka-topics --bootstrap-server {адрес, на котором поднят контейнер с кафкой} --topic {имя топика} --create --partitions 3 --replication-factor 1
+
+Вызов консьюмера (Все сообщения, отстреленные в кафку, будут отображаться в консоли)
+./kafka-console-consumer --bootstrap-server localhost:9092 --topic demo_java --from-beginning

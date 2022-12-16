@@ -1,6 +1,5 @@
 package ru.nsu.connector;
 
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
@@ -15,12 +14,18 @@ public class AppTest
         KafkaConfiguration configuration = getProducerConfiguration();
         KafkaConnector connector = new KafkaConnector();
         connector.init(configuration);
-        assertTrue(configuration.isConsumer());
+        assertTrue(configuration.isProducer());
     }
 
     protected KafkaConfiguration getProducerConfiguration() {
         KafkaConfiguration configuration = new KafkaConfiguration();
-        configuration.connectorUseCase = KafkaConfiguration.ConnectorUseCase.CONSUMER;
+        configuration.connectorUseCase = KafkaConfiguration.ConnectorUseCase.PRODUCER;
+        configuration.setUniqueAttribute("12345");
+        configuration.setUseOfConnector("consumer");
+        configuration.setBootstrapServers("localhost:9092");
+        configuration.setNameOfSchema("schema");
+        configuration.setProducerNameOfTopic("topic");
+        configuration.setProducerPathToFileContainingSchema("path");
         return configuration;
     }
 }
