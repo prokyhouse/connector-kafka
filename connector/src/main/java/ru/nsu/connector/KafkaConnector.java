@@ -76,7 +76,6 @@ public class KafkaConnector implements TestOp, SchemaOp, Connector, SyncOp, Crea
         if(properties.contains(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG)) {
             properties.remove(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG);
         }
-        properties.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, MidpointKafkaAvroSerializer.class);
 
         return new KafkaProducer(properties);
     }
