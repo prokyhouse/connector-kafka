@@ -63,3 +63,5 @@ Telegram: [@Ksuuuuuuuuuusha](https://t.me/Ksuuuuuuuuuusha)
 
 
 Чтобы остановить контейнеры пишем в терминале: `docker-compose -f docker-compose.yml down -v`
+
+[sonarcloud](/https://sonarcloud.io/summary/overall?id=kafka-connector)
