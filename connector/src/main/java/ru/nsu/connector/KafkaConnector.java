@@ -13,13 +13,6 @@ import org.identityconnectors.framework.spi.Configuration;
 import org.identityconnectors.framework.spi.Connector;
 import org.identityconnectors.framework.spi.ConnectorClass;
 import org.identityconnectors.framework.spi.operations.*;
-
-
-/**
- * Created by Kirill Prokofiev on 18.11.2022.
- * MIT License.
- */
-
 @ConnectorClass(displayNameKey = "connector.kafka.display", configurationClass = KafkaConfiguration.class)
 public class KafkaConnector implements TestOp, SchemaOp, Connector, SyncOp, CreateOp, DeleteOp {
 
@@ -36,14 +29,7 @@ public class KafkaConnector implements TestOp, SchemaOp, Connector, SyncOp, Crea
 
     @Override
     public void init(Configuration configuration) {
-//        if (this.configuration.isConsumer()) {
-//            System.out.println("[STATE] Connector is CONSUMER");
-//        } else if (this.configuration.isProducer()) {
-//            System.out.println("[STATE] Connector is PRODUCER");
-//        }
-
-        KafkaConfiguration kafkaConfig = (KafkaConfiguration) configuration;
-        this.configuration = kafkaConfig;
+        this.configuration = (KafkaConfiguration) configuration;
         this.configuration.validate();
 
         if (((KafkaConfiguration)configuration).isProducer()) {
