@@ -1,8 +1,6 @@
 package ru.nsu.connector;
 
-import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.*;
 
 import org.apache.kafka.clients.producer.KafkaProducer;
@@ -55,13 +53,6 @@ public class KafkaConnector implements TestOp, SchemaOp, Connector, SyncOp, Crea
 
     private KafkaProducer<String, String> initProducer() {
         Properties properties = new Properties();
-//        String pathToMorePropertiesForProducer = configuration.getPathToMorePropertiesForProducer();
-//
-//        if(pathToMorePropertiesForProducer != null) {
-//            try (InputStream input = new FileInputStream(pathToMorePropertiesForProducer)) {
-//                properties.load(input);
-//            } catch (IOException ignored) { }
-//        }
 
         addCommonPropertiesForConsumerAndProducer(configuration, properties);
 
@@ -84,14 +75,6 @@ public class KafkaConnector implements TestOp, SchemaOp, Connector, SyncOp, Crea
         }
         properties.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, configuration.getBootstrapServers());
 
-//        if(properties.contains(CommonClientConfigs.SECURITY_PROTOCOL_CONFIG)) {
-//            if(configuration.getKafkaSecurityProtocol() != null) {
-//                properties.remove(CommonClientConfigs.SECURITY_PROTOCOL_CONFIG);
-//                properties.put(properties, CommonClientConfigs.SECURITY_PROTOCOL_CONFIG, configuration.getKafkaSecurityProtocol());
-//            }
-//        } else {
-//            properties.put(properties, CommonClientConfigs.SECURITY_PROTOCOL_CONFIG, configuration.getKafkaSecurityProtocol());
-//        }
     }
 
     @Override
@@ -177,10 +160,4 @@ public class KafkaConnector implements TestOp, SchemaOp, Connector, SyncOp, Crea
             this.producer.partitionsFor(configuration.getProducerNameOfTopic());
         }
     }
-
-//    @Override
-//    public Set<AttributeDelta> updateDelta(ObjectClass objectClass, Uid uid, Set<AttributeDelta> set, OperationOptions operationOptions) {
-//        LOGGER.info("Update is not needed", objectClass, uid.getValue(), operationOptions);
-//        return null;
-//    }
 }
