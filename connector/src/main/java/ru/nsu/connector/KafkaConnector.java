@@ -13,6 +13,7 @@ import org.identityconnectors.framework.spi.Configuration;
 import org.identityconnectors.framework.spi.Connector;
 import org.identityconnectors.framework.spi.ConnectorClass;
 import org.identityconnectors.framework.spi.operations.*;
+
 @ConnectorClass(displayNameKey = "connector.kafka.display", configurationClass = KafkaConfiguration.class)
 public class KafkaConnector implements TestOp, SchemaOp, Connector, SyncOp, CreateOp, DeleteOp {
 
@@ -20,7 +21,9 @@ public class KafkaConnector implements TestOp, SchemaOp, Connector, SyncOp, Crea
 
     protected KafkaConfiguration configuration;
     private KafkaProducer<String, String> producer;
-    public static void main( String[] args ) { }
+
+    public static void main(String[] args) {
+    }
 
     @Override
     public Configuration getConfiguration() {
@@ -32,7 +35,7 @@ public class KafkaConnector implements TestOp, SchemaOp, Connector, SyncOp, Crea
         this.configuration = (KafkaConfiguration) configuration;
         this.configuration.validate();
 
-        if (((KafkaConfiguration)configuration).isProducer()) {
+        if (((KafkaConfiguration) configuration).isProducer()) {
             this.producer = this.initProducer();
         }
     }
@@ -42,12 +45,12 @@ public class KafkaConnector implements TestOp, SchemaOp, Connector, SyncOp, Crea
 
         addCommonPropertiesForConsumerAndProducer(configuration, properties);
 
-        if(properties.contains(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG)) {
+        if (properties.contains(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG)) {
             properties.remove(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG);
         }
         properties.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
 
-        if(properties.contains(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG)) {
+        if (properties.contains(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG)) {
             properties.remove(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG);
         }
         properties.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
@@ -56,7 +59,7 @@ public class KafkaConnector implements TestOp, SchemaOp, Connector, SyncOp, Crea
     }
 
     private static void addCommonPropertiesForConsumerAndProducer(KafkaConfiguration configuration, Properties properties) {
-        if(properties.contains(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG)) {
+        if (properties.contains(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG)) {
             properties.remove(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG);
         }
         properties.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, configuration.getBootstrapServers());
@@ -142,7 +145,7 @@ public class KafkaConnector implements TestOp, SchemaOp, Connector, SyncOp, Crea
     @Override
     public void test() {
         LOGGER.info("test");
-        if (this.configuration.isProducer()){
+        if (this.configuration.isProducer()) {
             this.producer.partitionsFor(configuration.getProducerNameOfTopic());
         }
     }
