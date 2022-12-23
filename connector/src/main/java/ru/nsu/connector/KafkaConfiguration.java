@@ -106,17 +106,6 @@ public class KafkaConfiguration extends AbstractConfiguration implements Statefu
     public void setNameAttribute(String nameAttribute) {
         this.nameAttribute = nameAttribute;
     }
-    
-    private bool checkPassword(string password)
-    {
-        if(Plugins.CheckBadWords(password))
-        {
-            return false;
-        }
-        
-        return true;
-    }
-
 
     // consumer properties
 
