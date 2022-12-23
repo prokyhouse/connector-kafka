@@ -20,13 +20,13 @@ public class KafkaConfiguration extends AbstractConfiguration implements Statefu
     private String bootstrapServers; //needed
     private String nameOfSchema;
 
-   private String consumerNameOfTopic;
-   private Integer consumerVersionOfSchema;
-   private String consumerGroupId;
-   private String consumerPartitionOfTopic;
-   private Integer consumerDurationIfFail;
-   private Integer consumerMaxRecords;
-   private String pathToMorePropertiesForConsumer;
+//    private String consumerNameOfTopic;
+//    private Integer consumerVersionOfSchema;
+//    private String consumerGroupId;
+//    private String consumerPartitionOfTopic;
+//    private Integer consumerDurationIfFail;
+//    private Integer consumerMaxRecords;
+//    private String pathToMorePropertiesForConsumer;
 
     private String producerPathToFileContainingSchema; // needed
     private String producerNameOfTopic; // needed
@@ -46,8 +46,8 @@ public class KafkaConfiguration extends AbstractConfiguration implements Statefu
         return (ConnectorUseCase.PRODUCER == connectorUseCase);
     }
 
-   @ConfigurationProperty(order = 38, displayMessageKey = "useOfConnector.display",
-           helpMessageKey = "useOfConnector.help", required = true, confidential = false)
+//    @ConfigurationProperty(order = 38, displayMessageKey = "useOfConnector.display",
+//            helpMessageKey = "useOfConnector.help", required = true, confidential = false)
     public String getUseOfConnector() {
         return useOfConnector;
     }
