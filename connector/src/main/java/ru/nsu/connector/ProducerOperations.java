@@ -20,7 +20,7 @@ public class ProducerOperations {
     private KafkaProducer<String, String> producer;
     private final Callback callback = new PublishCallback();
 
-    public ProducerOperations(KafkaConfiguration configuration, KafkaProducer<String, String> producer){
+    public ProducerOperations(KafkaConfiguration configuration, KafkaProducer<String, String> producer) {
         this.configuration = configuration;
         this.producer = producer;
     }

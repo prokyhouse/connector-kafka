@@ -28,9 +28,9 @@ public class KafkaConnectorUtils {
         return null;
     }
 
-    public static boolean isUniqueAndNameAttributeEqual( KafkaConfiguration configuration) {
+    public static boolean isUniqueAndNameAttributeEqual(KafkaConfiguration configuration) {
         if (StringUtils.isBlank(configuration.getNameAttribute())) {
-            return  true;
+            return true;
         }
         return configuration.getUniqueAttribute().equals(configuration.getNameAttribute());
     }

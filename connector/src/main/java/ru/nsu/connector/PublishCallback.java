@@ -6,6 +6,7 @@ import org.apache.kafka.clients.producer.RecordMetadata;
 public class PublishCallback implements Callback {
 
     @Override
-    public void onCompletion(RecordMetadata recordMetadata, Exception e) { }
+    public void onCompletion(RecordMetadata recordMetadata, Exception e) {
+    }
 
 }
